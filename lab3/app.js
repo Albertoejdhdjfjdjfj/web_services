@@ -35,9 +35,9 @@ passport.use(
   new GitLabStrategy(
     {
       clientID:
-        "9dc1bc1329566d4138bec48ef8da67cae2393e49844efcea931d21b726ae2cf2",
+        "2883016b57579a3e5e79998c3a0ea804dd12b705ec874df72746bba48f3bb52e",
       clientSecret:
-        "gloas-5447f0658692c1415260648073b1ff4b02e3b5e36f07c4e1237c3825ec16cddc",
+        "gloas-dd2bd8f8d877ce32d0727f2df332ce073a7d0aec9c19d529997efe01edfddb89",
       callbackURL: "http://localhost:8000/auth/gitlab/callback",
     },
     (accessToken, refreshToken, profile, done) => {
