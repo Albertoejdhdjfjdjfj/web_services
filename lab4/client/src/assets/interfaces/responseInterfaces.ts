@@ -2,9 +2,9 @@ export interface ResponseMessage {
   message: string;
 }
 
-export interface UserData {
-  token: string;
-  username: string;
+export interface TokensData {
+  accessToken:string,
+  refreshToken:string
 }
 
 export interface Book {

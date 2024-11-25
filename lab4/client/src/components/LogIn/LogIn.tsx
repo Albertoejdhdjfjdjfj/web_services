@@ -2,27 +2,28 @@ import React, { FC } from 'react';
 import Cookies from 'js-cookie';
 import { logIn } from '../../assets/functions/requestsFunctions';
 import { useNavigate } from 'react-router';
-import { UserData, ResponseMessage } from '../../assets/interfaces/responseInterfaces';
+import { TokensData, ResponseMessage } from '../../assets/interfaces/responseInterfaces';
 import './LogIn.css';
 
 const LogIn: FC = () => {
   const [error, setError] = React.useState<string>('');
-  const [username, setUsername] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const navigate=useNavigate();
 
   async function sendData(): Promise<void> {
-    const res: Response = await logIn(username, password);
+    const res: Response = await logIn(email, password);
 
     if (res.status >= 400) {
       const message: ResponseMessage = await res.json();
       setError(message.message);
-      return;
-    }
-    const result: UserData = await res.json();
-    const { token, ...user_info } = result;
-    Cookies.set('user_info', JSON.stringify(user_info));
-    Cookies.set('token', token);
+      return; 
+    } 
+     
+    const result: TokensData = await res.json();
+    const { refreshToken,accessToken} = result;
+    Cookies.set('accessToken', accessToken);
+    Cookies.set('refreshToken', refreshToken);
     navigate('/')
   }
 
@@ -37,8 +38,8 @@ const LogIn: FC = () => {
         </span>
         <h2>Welcome to Fox Library</h2>
         <div>
-          <p>Username</p>
-          <input type="text" onChange={(e) => setUsername(e.target.value)} />
+          <p>Email</p>
+          <input type="text" onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div>
           <p>Password</p>

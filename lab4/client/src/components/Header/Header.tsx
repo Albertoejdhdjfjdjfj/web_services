@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router';
 import { set_search } from '../../redux/actions/state_components/actions';
 import Logo from '../../assets/images/Logo.svg';
 import Glass from '../../assets/images/Glass.svg';
 import DefaultAvatar from '../../assets/images/DefaultAvatar.svg';
-import { ResponseMessage } from '../../assets/interfaces/responseInterfaces';
-import { verifyToken } from '../../assets/functions/requestsFunctions';
+import { ResponseMessage, TokensData } from '../../assets/interfaces/responseInterfaces';
+import { verifyToken ,updateTokens} from '../../assets/functions/requestsFunctions';
 import './Header.css';
 import ProfileMenu from './ProfileMenu/ProfileMenu';
 
@@ -22,14 +23,23 @@ const Header = () => {
     if (res.status >= 400) {
       const message: ResponseMessage = await res.json();
       console.log(message)
-      setStateToken(false);
+      const newRes:Response = await updateTokens()
+      if(newRes.status >=400){
+        const message: ResponseMessage = await newRes.json();
+        console.log(message)
+        setStateToken(false);
+      }
+      const result: TokensData = await newRes.json();
+      console.log(result)
+      const {refreshToken,accessToken} = result;
+      Cookies.set('accessToken', accessToken);
+      Cookies.set('refreshToken', refreshToken);
       return;
     }
     setStateToken(true);
   };
 
   function isCurrentPath(possible_path: string): boolean {
-    console.log(path.pathname)
     if (possible_path == path.pathname) {
       return true;
     }

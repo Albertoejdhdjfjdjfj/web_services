@@ -17,6 +17,6 @@ router.post('/registration',[
 ],controller.registation)
 router.post('/login',controller.login),
 router.post('/check',controller.verifyToken)
-
+router.put('/update',controller.updateTokens)
 export default router;
 

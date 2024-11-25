@@ -23,14 +23,14 @@ export async function signUp(
   return message;
 }
 
-export async function logIn(username: string, password: string): Promise<Response> {
+export async function logIn(email: string, password: string): Promise<Response> {
   const message = await fetch(host + '/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      username: username,
+      email: email,
       password: password
     })
   });
@@ -65,7 +65,7 @@ export async function getBook(id: string): Promise<Response> {
 }
 
 export async function getStatusBook(id: string): Promise<Response> {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
   const message = await fetch(host + '/books/status?id=' + id, {
     method: 'GET',
     headers: {
@@ -78,7 +78,7 @@ export async function getStatusBook(id: string): Promise<Response> {
 }
 
 export async function orderBookById(id: string): Promise<Response> {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
   const message = await fetch(host + '/books/order', {
     method: 'POST',
     headers: {
@@ -94,7 +94,7 @@ export async function orderBookById(id: string): Promise<Response> {
 }
 
 export async function returnBookById(id: string): Promise<Response> {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
   const message = await fetch(host + '/books/return', {
     method: 'POST',
     headers: {
@@ -110,7 +110,7 @@ export async function returnBookById(id: string): Promise<Response> {
 }
 
 export async function getWaitingBooks(): Promise<Response> {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
   const message = await fetch(host + '/books/waiting', {
     method: 'GET',
     headers: {
@@ -123,7 +123,7 @@ export async function getWaitingBooks(): Promise<Response> {
 }
 
 export async function getOrderedBooks(): Promise<Response> {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
   const message = await fetch(host + '/books/order', {
     method: 'GET',
     headers: {
@@ -136,9 +136,22 @@ export async function getOrderedBooks(): Promise<Response> {
 }
 
 export async function verifyToken(): Promise<Response> {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
   const message = await fetch(host + '/auth/check', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return message;
+}
+
+export async function updateTokens(): Promise<Response> {
+  const token = Cookies.get('refreshToken');
+  const message = await fetch(host + '/auth/update', {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
