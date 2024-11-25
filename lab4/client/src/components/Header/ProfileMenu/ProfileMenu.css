@@ -1,0 +1,29 @@
+.profile_menu{
+     width: 170px;
+     height: 200px;
+     padding: 20px 20px 13px 20px;
+     display: flex;
+     flex-direction: column;
+     position: absolute;
+     top: 95px;
+     right: 81px;
+     border: 1px solid rgba(181, 181, 181, 0.6);
+     border-radius: 8px;
+}
+
+.profile_menu>p{
+     font-size: 18px;
+     font-weight: 600;
+}
+
+.profile_menu>div{
+     margin-top: 23px;
+     width: 100%;
+     font-size: 16px;
+     font-weight: 600;
+     color: rgba(97, 97, 97, 1);
+}
+
+.profile_menu>div:nth-of-type(3){
+     color:rgba(255, 93, 79, 1);
+}
