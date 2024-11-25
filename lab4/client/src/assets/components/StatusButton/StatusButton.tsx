@@ -13,7 +13,7 @@ const StatusButton = ({ id }) => {
 
     if (res.status === 400) {
       const message: ResponseMessage = await res.json();
-      setStatus(null)
+      setStatus(null);
       return;
     }
 
@@ -39,7 +39,7 @@ const StatusButton = ({ id }) => {
     if (res.status === 400) {
       const message: ResponseMessage = await res.json();
       console.log(message);
-      
+
       return;
     }
     getStatus(id as string);
@@ -50,12 +50,14 @@ const StatusButton = ({ id }) => {
   }, []);
 
   return (
-    status&&<div className="status_button">
-      {status === 'Order' && <p onClick={() => orderBook(id)}>{status}</p>}
-      {status === 'Available' && <p onClick={() => orderBook(id)}>{status}</p>}
-      {status === 'Return' && <p onClick={() => returnBook(id)}>{status}</p>}
-      {status === 'Taken' && <p>{status}</p>}
-    </div>
+    status && (
+      <div className="status_button">
+        {status === 'Order' && <p onClick={() => orderBook(id)}>{status}</p>}
+        {status === 'Available' && <p onClick={() => orderBook(id)}>{status}</p>}
+        {status === 'Return' && <p onClick={() => returnBook(id)}>{status}</p>}
+        {status === 'Taken' && <p>{status}</p>}
+      </div>
+    )
   );
 };
 

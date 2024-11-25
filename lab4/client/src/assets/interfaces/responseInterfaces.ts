@@ -3,8 +3,8 @@ export interface ResponseMessage {
 }
 
 export interface TokensData {
-  accessToken:string,
-  refreshToken:string
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface Book {

@@ -9,7 +9,7 @@ const LogIn: FC = () => {
   const [error, setError] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   async function sendData(): Promise<void> {
     const res: Response = await logIn(email, password);
@@ -17,21 +17,21 @@ const LogIn: FC = () => {
     if (res.status >= 400) {
       const message: ResponseMessage = await res.json();
       setError(message.message);
-      return; 
-    } 
-     
+      return;
+    }
+
     const result: TokensData = await res.json();
-    const { refreshToken,accessToken} = result;
+    const { refreshToken, accessToken } = result;
     Cookies.set('accessToken', accessToken);
     Cookies.set('refreshToken', refreshToken);
-    navigate('/')
+    navigate('/');
   }
 
   return (
     <div className="log_in_wrapper">
       <div className="log_in">
         <span>
-          <div onClick={()=>navigate('/')}>
+          <div onClick={() => navigate('/')}>
             <span></span>
             <span></span>
           </div>

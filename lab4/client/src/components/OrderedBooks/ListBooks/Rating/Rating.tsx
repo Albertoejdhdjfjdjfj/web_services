@@ -12,7 +12,7 @@ const Rating = ({ rating }) => {
           <img key={index} src={BlackStar} alt="star" />
         ))}
 
-      {Array(5-rating)
+      {Array(5 - rating)
         .fill()
         .map((_, index) => (
           <img key={index} src={Star} alt="star" />

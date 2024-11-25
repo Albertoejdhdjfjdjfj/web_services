@@ -10,7 +10,7 @@ const SignUp = () => {
   const [birthdate, setBirthdate] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   async function sendData() {
     const res: Response = await signUp(username, birthdate, email, password);
@@ -19,14 +19,14 @@ const SignUp = () => {
       setError(message.message);
       return;
     }
-    navigate('/')
+    navigate('/');
   }
 
   return (
     <div className="sign_up_wrapper">
       <div className="sign_up">
         <span>
-          <div onClick={()=>navigate('/')}>
+          <div onClick={() => navigate('/')}>
             <span></span>
             <span></span>
           </div>
