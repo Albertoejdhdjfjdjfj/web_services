@@ -4,7 +4,8 @@ export interface Action {
 }
 
 export interface StateComponents {
-  search: string;
+  search: string,
+  email:string
 }
 
 export interface CombineState {

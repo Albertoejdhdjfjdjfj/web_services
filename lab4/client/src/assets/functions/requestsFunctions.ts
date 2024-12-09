@@ -145,6 +145,23 @@ export async function verifyToken(): Promise<Response> {
     }
   });
 
+  console.log(message)
+
+  return message;
+}
+
+export async function verifyCode(email:string,code:string): Promise<Response> {
+  const message = await fetch(host + '/auth/verify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email:email,
+      code:code
+    })
+  });
+
   return message;
 }
 

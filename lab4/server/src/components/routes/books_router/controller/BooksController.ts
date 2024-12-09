@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import {ObjectId}from 'mongoose';
 import jwt from 'jsonwebtoken';
-import config from '../../config';
+import {accessSecret} from '../../config';
 import { BookModel, Book } from '../models/Book';
 import { OrderedBookModel } from '../models/OrderedBook';
 import { UserBookListsModel, UserBookLists, UserBook } from '../models/UserBookLists';
@@ -65,7 +65,7 @@ export default class BooksController {
 
       let userId: string;
       try {
-        const decodedToken: any = jwt.verify(token, config.secret);
+        const decodedToken: any = jwt.verify(token, accessSecret.secret);
         userId = decodedToken.userId;
       } catch (error) {
         res.status(401).json({ message: 'Неверный токен авторизации' });
@@ -105,7 +105,7 @@ export default class BooksController {
   
       let userId: string;
       try {
-        const decodedToken: any = jwt.verify(token, config.secret);
+        const decodedToken: any = jwt.verify(token, accessSecret.secret);
         userId = decodedToken.userId;
       } catch (error) {
         res.status(401).json({ message: 'Неверный токен авторизации' });
@@ -155,7 +155,7 @@ export default class BooksController {
      
       let userId:string;
       try {
-        const decodedToken: any = jwt.verify(token as string, config.secret);
+        const decodedToken: any = jwt.verify(token as string, accessSecret.secret);
         userId = decodedToken.userId;
       } catch (error) {
         res.status(401).json({ message: 'Неверный токен авторизации' });
@@ -198,7 +198,7 @@ export default class BooksController {
 
     let userId: string;
     try {
-      const decodedToken: any = jwt.verify(token, config.secret);
+      const decodedToken: any = jwt.verify(token, accessSecret.secret);
       userId = decodedToken.userId;
     } catch (error) {
       res.status(401).json({ message: 'Неверный токен авторизации' });
@@ -237,7 +237,7 @@ async getWaitingBooks(req: Request, res: Response): Promise<void> {
 
     let userId: string;
     try {
-      const decodedToken: any = jwt.verify(token as string, config.secret);
+      const decodedToken: any = jwt.verify(token as string, accessSecret.secret);
       userId = decodedToken.userId;
     } catch (error) {
       res.status(401).json({ message: 'Неверный токен авторизации' });
@@ -291,7 +291,7 @@ async getOrderedBooks(req: Request, res: Response):Promise<void> {
 
     let userId: string;
 try {
-  const decodedToken: any = jwt.verify(token as string, config.secret);
+  const decodedToken: any = jwt.verify(token as string, accessSecret.secret);
   userId = decodedToken.userId;
 } catch (error) {
   res.status(401).json({ message: 'Неверный токен авторизации' });

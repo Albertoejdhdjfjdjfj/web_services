@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { set_email } from '../../redux/actions/state_components/actions';
 import { logIn } from '../../assets/functions/requestsFunctions';
 import { useNavigate } from 'react-router';
 import { TokensData, ResponseMessage } from '../../assets/interfaces/responseInterfaces';
@@ -7,9 +8,10 @@ import './LogIn.css';
 
 const LogIn: FC = () => {
   const [error, setError] = React.useState<string>('');
-  const [email, setEmail] = React.useState<string>('');
-  const [password, setPassword] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('bairamukov.albert2003@gmail.com');
+  const [password, setPassword] = React.useState<string>('albert26102003');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function sendData(): Promise<void> {
     const res: Response = await logIn(email, password);
@@ -20,11 +22,8 @@ const LogIn: FC = () => {
       return;
     }
 
-    const result: TokensData = await res.json();
-    const { refreshToken, accessToken } = result;
-    Cookies.set('accessToken', accessToken);
-    Cookies.set('refreshToken', refreshToken);
-    navigate('/');
+    dispatch(set_email(email))
+    navigate('/log_in/verify');
   }
 
   return (

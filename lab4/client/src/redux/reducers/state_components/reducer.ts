@@ -1,8 +1,9 @@
-import { SET_SEARCH } from '../../actions/state_components/actionsTypes';
+import { SET_SEARCH,SET_EMAIL } from '../../actions/state_components/actionsTypes';
 import { StateComponents, Action } from '../../../assets/interfaces/reduxInterfaces';
 
 const initialState: StateComponents = {
-  search: ''
+  search: '',
+  email:'',
 };
 
 export default function state_components(
@@ -12,6 +13,8 @@ export default function state_components(
   switch (action.type) {
     case SET_SEARCH:
       return { ...state, search: action.payload as string };
+    case SET_EMAIL:
+      return { ...state, email: action.payload as string };
     default:
       return state;
   }
