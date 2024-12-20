@@ -20,9 +20,9 @@ app.use((req, res, next) => {
    });
    app.use(cors());
    app.use(express.json()); 
+   app.use("/",hotels_router);
    app.use("/auth",auth_router);
    app.use("/reservation",reservation_router);
-   app.use("/hotels",hotels_router);
 
 const start = async()=> {
      try{
