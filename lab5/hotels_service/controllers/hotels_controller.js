@@ -27,6 +27,22 @@ class HotelsController{
                res.status(400).json({ message: 'Ошибка при получении отелей' });
              }
      }
+
+     async checkHotelId(req, res) {
+      try {
+          const { hotelId } = req.body;
+          const hotel = await Hotels.findById(hotelId);
+  
+          if (!hotel) {
+              return res.status(404).json({ message: 'Отель не найден' });
+          }
+  
+          return res.status(200).json({}); 
+      } catch (e) {
+          console.log(e);
+          res.status(400).json({ message: 'Ошибка при получении отелей' });
+      }
+  }
 }     
 
      module.exports=new HotelsController() 

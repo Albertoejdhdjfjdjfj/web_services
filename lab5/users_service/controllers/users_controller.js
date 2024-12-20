@@ -141,7 +141,7 @@ class UsersController {
             return;
           }
           const decodedToken = jwt.verify(token, accessSecret.secret);
-          res.status(200).json({});
+          res.status(200).json({userId:decodedToken.userId});
         } catch (error) {
           res.status(401).json({ message: 'Недействительный токен авторизации' });
         }
