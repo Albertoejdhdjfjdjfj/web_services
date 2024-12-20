@@ -1,9 +1,8 @@
-import express, { Express,Request,Response,NextFunction } from "express";
-import cors from 'cors'
-import mongoose from 'mongoose'
-import authRouter from './components/routes/auth_router/authRouter'
-import booksRouter from './components/routes/books_router/booksRouter'
-const PORT = process.env.PORT || 5000
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const users_router = require('./routes/users_router');
+const PORT = process.env.PORT || 5003
 
 const app = express(); 
 app.use((req, res, next) => {
@@ -21,12 +20,11 @@ app.use((req, res, next) => {
    
    app.use(cors())
    app.use(express.json()); 
-   app.use("/auth",authRouter);
-   app.use("/books",booksRouter)
+   app.use("/",users_router);
 
 const start = async()=> {
      try{
-          mongoose.connect('mongodb+srv://albert:albert26102003@cluster1.ecre7jl.mongodb.net/?retryWrites=true&w=majority').then(() => {
+          mongoose.connect('mongodb://localhost:27017/userservice').then(() => {
           console.log('Connected to MongoDB');
      }).catch((err) => {
         console.error('Error connecting to MongoDB', err);
