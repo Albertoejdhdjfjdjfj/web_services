@@ -2,59 +2,67 @@ const axios = require('axios');
 const Reservations = require('../db/reservation_model');
 
 class ReservationsController {
-  async reserve(req, res) {
-    try {
-        const { hotelId } = req.body;
-        const token = req.headers.authorization?.split(' ')[1];
-        
-        if (!token) {
-            return res.status(401).json({ message: 'Токен авторизации отсутствует' });
-        }
-
-        let userId;
-
+    async reserve(req, res) {
         try {
+            const { hotelId } = req.body;
+            const token = req.headers.authorization;
+
             const response = await axios.post('http://localhost:5003/check', {}, { 
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: token,
                 },
             });
 
-            userId = response.data.userId;
-        } catch (err) {
-            return res.status(401).json({ message: 'Недействительный токен авторизации' });
+            const userId = response.data.userId;
+            
+            await axios.post('http://localhost:5002/check', { hotelId: hotelId });
+           
+            const existingReservation = await Reservations.findOne({ userId });
+
+            if (existingReservation) {
+                return res.status(400).json({ message: 'You already have a reservation.' });
+            }
+
+            const newReservation = new Reservations({
+                userId,
+                reservations: hotelId,
+            });
+
+            await newReservation.save();
+
+            return res.status(200).json({ message: 'Reservation successful' });
+        }catch (error) {
+            if (error.response) {
+                return res.status(error.response.status).json({ message: error.response.data.message });
+            } else {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
         }
-
-        
-      try {
-          const hotelResponse = await axios.post('http://localhost:5002/check', { hotelId: hotelId });
-          if (!hotelResponse.data) {
-              return res.status(404).json({ message: 'Отеля не существует' });
-          }
-      } catch (err) {
-          return res.status(404).json({ message: 'Ошибка при проверке отеля' });
-      }
-
-        const existingReservation = await Reservations.findOne({ userId });
-
-        if (existingReservation) {
-            return res.status(400).json({ message: 'У вас уже есть бронирование.' });
-        }
-
-      
-        const newReservation = new Reservations({
-            userId,
-            reservations: hotelId,
-        });
-
-        await newReservation.save();
-
-        return res.status(200).json({ message: 'Бронирование успешно' });
-    } catch (e) {
-        console.log(e);
-        return res.status(400).json({ message: 'Ошибка при бронировании' });
     }
-}
+
+    async delete_reserve(req, res) {
+        try {
+            const token = req.headers.authorization;
+
+            const response = await axios.post('http://localhost:5003/check', {}, { 
+                headers: {
+                    Authorization: token,
+                },
+            });
+
+            const userId = response.data.userId; 
+           
+            await Reservations.deleteOne({ userId:userId });
+            return res.status(200).json({ message: 'Deleting reservation successful' });
+        }catch (error) {
+            if (error.response) {
+                return res.status(error.response.status).json({ message: error.response.data.message });
+            } else {
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+        }
+    }
 }
 
 module.exports = new ReservationsController();

@@ -1,6 +1,6 @@
 const express=require("express");
 const cors=require('cors');
-const auth_router =require('./routes/auth_router');
+const users_router =require('./routes/users_router');
 const reservation_router =require('./routes/reservation_router');
 const hotels_router =require('./routes/hotels_router');
 const PORT = process.env.PORT || 5000
@@ -18,10 +18,11 @@ app.use((req, res, next) => {
      );
      next();
    });
+   
    app.use(cors());
    app.use(express.json()); 
    app.use("/",hotels_router);
-   app.use("/auth",auth_router);
+   app.use("/auth",users_router);
    app.use("/reservation",reservation_router);
 
 const start = async()=> {
