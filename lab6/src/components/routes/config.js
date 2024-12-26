@@ -1,18 +1,18 @@
-export const accessSecret = {
+const accessSecret = {
      secret:"SECRET_KEY_RANDOM",
 }
 
-export const refreshSecret = {
+const refreshSecret = {
      secret:"ALBERT_KNOWS_ES6",
 }
 
-export const secretNumber = {
+const secretNumber = {
      round:7,
 }
 
-export const secretEmail = {
-     email:"modnikky_shop@mail.ru",
-     pass:"pvdDdtY8Z0s7iHdgjVdm"
+const secretEmail = {
+     email:"modnikky_shop@mail.ru", 
+     pass:"pvdDdtY8Z0s7iHdgjVdm"  
 }
 
 module.exports = {accessSecret,refreshSecret,secretNumber,secretEmail}

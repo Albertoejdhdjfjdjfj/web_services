@@ -4,7 +4,7 @@ const  BookModel =require('../models/Book');
 const OrderedBookModel =require('../models/OrderedBook');
 const UserBookListsModel =require('../models/UserBookLists');
 
-export default class BooksController {
+class BooksController {
   async getBooks(req, res){
     try {
       const { sort, page, limit } = req.query;
@@ -324,4 +324,4 @@ try {
 }
 }
 
-module.exports = new BooksController()
+module.exports = BooksController

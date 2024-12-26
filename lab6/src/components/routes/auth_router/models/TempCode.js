@@ -1,4 +1,4 @@
-import { Schema, model} from "mongoose";
+const { Schema, model} = require("mongoose");
 
 const TempCodeSchema = new Schema({
   email: { type: String, required: true },

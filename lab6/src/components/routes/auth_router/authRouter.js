@@ -1,6 +1,6 @@
-import {Router} from 'express';
-import AuthController from './controller/AuthController'
-import { check } from 'express-validator';
+const {Router}=require('express');
+const AuthController =require('./controller/AuthController');
+const{ check }=require('express-validator');;
 
 const router= Router(); 
 const controller = new AuthController();
