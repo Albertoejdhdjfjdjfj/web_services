@@ -31,8 +31,9 @@ const start = async()=> {
      }).catch((err) => {
         console.error('Error connecting to MongoDB', err);
      });
+     if(require.main == module){
           app.listen(PORT,()=>console.log(`server started on port ${PORT}`));
-          
+     } 
      }
      catch(e){  
           console.log(e)    
