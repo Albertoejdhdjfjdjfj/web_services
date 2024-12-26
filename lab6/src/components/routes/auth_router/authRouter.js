@@ -19,5 +19,6 @@ router.post('/login',controller.login),
 router.post('/verify',controller.checkCode)
 router.post('/check',controller.verifyToken)
 router.put('/update',controller.updateTokens)
-export default router;
+
+module.exports=router;
 

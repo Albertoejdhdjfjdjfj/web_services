@@ -1,11 +1,8 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
-const UserBookListsSchema = new Schema<UserBookLists>({
+const UserBookListsSchema = new Schema({
   userId: { type: String, required: true },
   books: [{ bookId: { type: String }, rating: { type: Number, default: 0 } }],
 });
 
-export const UserBookListsModel = model(
-  "UserBookLists",
-  UserBookListsSchema
-);
+module.exports =  model( "UserBookLists",UserBookListsSchema);

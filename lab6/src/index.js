@@ -1,8 +1,8 @@
-import express from "express";
-import cors from 'cors'
-import mongoose from 'mongoose'
-import authRouter from './components/routes/auth_router/authRouter'
-import booksRouter from './components/routes/books_router/booksRouter'
+const express = require('express');
+const cors = require ('require')
+const mongoose = require('mongoose')
+const authRouter = require('./components/routes/auth_router/authRouter')
+const booksRouter = require('./components/routes/books_router/booksRouter')
 const PORT=process.env.PORT || 5000
 
 const app = express(); 

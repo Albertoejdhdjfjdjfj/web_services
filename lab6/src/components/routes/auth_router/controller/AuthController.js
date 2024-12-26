@@ -1,10 +1,10 @@
-import UserModel from "../models/User";
-import TempCodeModel from "../models/TempCode";
-import nodemailer from 'nodemailer'
-import {accessSecret,refreshSecret,secretNumber,secretEmail} from '../../config'
-import bcrypt from "bcryptjs";
-import {validationResult} from "express-validator";
-import jwt from "jsonwebtoken";
+const UserModel =require( "../models/User");
+const TempCodeModel =require( "../models/TempCode");
+const nodemailer =require( 'nodemailer')
+const {accessSecret,refreshSecret,secretNumber,secretEmail} =require( '../../config')
+const bcrypt =require( "bcryptjs");
+const {validationResult} =require("express-validator");
+const jwt =require( "jsonwebtoken");
  
 function generateAccessToken(id){
   const payload={userId:id}
@@ -16,7 +16,7 @@ function generateRefreshToken(id){
   return jwt.sign(payload,refreshSecret.secret,{expiresIn:"720h"})
 }
 
- export default class AuthController {
+class AuthController {
       async registation(req,res){ 
         try{
               const errors=validationResult(req)
@@ -169,4 +169,4 @@ function generateRefreshToken(id){
       }
  }
    
- 
+ module.exports = new AuthController()

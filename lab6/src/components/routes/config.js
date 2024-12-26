@@ -14,3 +14,5 @@ export const secretEmail = {
      email:"modnikky_shop@mail.ru",
      pass:"pvdDdtY8Z0s7iHdgjVdm"
 }
+
+module.exports = {accessSecret,refreshSecret,secretNumber,secretEmail}

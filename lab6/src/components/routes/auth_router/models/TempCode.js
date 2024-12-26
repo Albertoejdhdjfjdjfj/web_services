@@ -5,4 +5,4 @@ const TempCodeSchema = new Schema({
   code: { type: String, required: true },
 });
 
-export const TempCodeModel = model ("TempCode", TempCodeSchema);
+module.exports = model ("TempCode", TempCodeSchema);

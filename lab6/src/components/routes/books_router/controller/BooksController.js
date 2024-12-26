@@ -1,9 +1,8 @@
-import {ObjectId}from 'mongoose';
-import jwt from 'jsonwebtoken';
-import {accessSecret} from '../../config';
-import { BookModel, Book } from '../models/Book';
-import { OrderedBookModel } from '../models/OrderedBook';
-import { UserBookListsModel, UserBookLists, UserBook } from '../models/UserBookLists';
+const jwt =require('jsonwebtoken');
+const {accessSecret} =require('../../config');
+const  BookModel =require('../models/Book');
+const OrderedBookModel =require('../models/OrderedBook');
+const UserBookListsModel =require('../models/UserBookLists');
 
 export default class BooksController {
   async getBooks(req, res){
@@ -325,3 +324,4 @@ try {
 }
 }
 
+module.exports = new BooksController()

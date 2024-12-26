@@ -1,4 +1,4 @@
-import { Schema, model,Model, Document } from "mongoose";
+const { Schema, model}= require("mongoose");
 
 
 
@@ -7,4 +7,4 @@ const  OrderedBookSchema = new Schema({
   usersIds: { type: [String], required: true },
 });
 
-export const  OrderedBookModel = model ("OrderedBook",OrderedBookSchema);
+module.exports =  model ("OrderedBook",OrderedBookSchema);

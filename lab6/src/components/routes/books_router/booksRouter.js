@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import BooksController from './controller/BooksController';
+const {Router} = require('express');
+const BooksController = require('./controller/BooksController');
 
 
 const router= Router();
@@ -13,5 +13,5 @@ router.get('/status',controller.getSatusBook);
 router.post('/rating',controller.setRatingBook);
 router.get('/waiting',controller.getWaitingBooks);
 
-export default router;
+module.exports = router;
 
