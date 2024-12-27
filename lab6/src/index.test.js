@@ -1,86 +1,47 @@
-import request from 'supertest';
-import express from 'express';
-import authRouter from './components/routes/auth_router/authRouter'; 
-const app = express();
+const request =require('supertest');
+const mongoose = require('mongoose');
+const app = require('./index');
 
-app.use(express.json());
-app.use('/auth', authRouter);
+beforeAll(async () => {
+    await mongoose.connect('mongodb+srv://albert:albert26102003@cluster1.ecre7jl.mongodb.net/?retryWrites=true&w=majority')
+               .then(() => {
+                   console.log('Connected to MongoDB');
+               })
+               .catch((err) => {
+                   console.error('Error connecting to MongoDB', err);
+               });
+   
+});
 
-const mockUser = {
-  username: 'testuser',
-  birthday: '1990-01-01',
-  email: 'test@example.com',
-  password: 'password123',
-};
+afterAll(async () => {
+    await mongoose.connection.close();
+});
 
-describe('Auth API Tests', () => {
-  it('should register a new user', async () => {
+describe('Books API', () => {
+  it('should return a list of books', async () => {
     const response = await request(app)
-      .post('/auth/registration')
-      .send(mockUser);
+    .get('/books')
     console.log(response)
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Registration succesfully');
+    expect(response.body).toBeInstanceOf(Array); 
   });
 
-  it('should not register an existing user', async () => {
+  it('should return a book by ID', async () => {
+    const bookId = '662583034116f732f71b55d9'
     const response = await request(app)
-      .post('/auth/registration')
-      .send(mockUser);
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Такой пользователь уже существует');
-  });
-
-  it('should log in the user and send verification code', async () => {
-    const response = await request(app)
-      .post('/auth/login')
-      .send({ email: mockUser.email, password: mockUser.password });
+      .get('/books/id')
+      .query({ id: bookId });
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe('ok'); 
+    expect(response.body).toHaveProperty('name');
   });
 
-  it('should verify the code and return tokens', async () => {
-    const response = await request(app).post('/auth/verify').send({
-      email: mockUser.email,
-      code: '123456' // Replace with the actual code sent to the user's email
-    });
-
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('accessToken');
-    expect(response.body).toHaveProperty('refreshToken');
-  });
-
-  it('should verify the access token', async () => {
-    const tokenResponse = await request(app).post('/auth/verify').send({
-      email: mockUser.email,
-      code: '123456' // Use the correct code here
-    });
-
-    const accessToken = tokenResponse.body.accessToken;
-
+  it('should return 403 for unauthorized order', async () => {
     const response = await request(app)
-      .post('/auth/check')
-      .set('Authorization', `Bearer ${accessToken}`);
+      .post('/books/order')
+      .send({ id: 'someValidBookId' });
 
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('ok');
-  });
-
-  it('should update tokens', async () => {
-    const tokenResponse = await request(app).post('/auth/verify').send({
-      email: mockUser.email,
-      code: '123456' // Use the correct code here
-    });
-
-    const refreshToken = tokenResponse.body.refreshToken;
-
-    const response = await request(app)
-      .put('/auth/update')
-      .set('Authorization', `Bearer ${refreshToken}`);
-
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('accessToken');
-    expect(response.body).toHaveProperty('refreshToken');
+    expect(response.status).toBe(403);
+    expect(response.body.message).toBe('Пользователь не авторизован');
   });
 });
