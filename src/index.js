@@ -32,7 +32,7 @@ const start = async () => {
                 console.log('Connected to MongoDB');
             })
             .catch((err) => {
-                console.error('Error connecting to MongoDB', err);
+                // console.error('Error connecting to MongoDB', err);
             });
 
         if (require.main === module) {
