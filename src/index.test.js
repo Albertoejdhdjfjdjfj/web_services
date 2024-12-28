@@ -23,7 +23,7 @@ describe('Books API', () => {
     .get('/books')
     console.log(response)
     expect(response.status).toBe(200);
-    expect(response.body).toBeInstanceOf(Array); 
+    expect(response.body.data).toBeInstanceOf(Array); 
   });
 
   it('should return a book by ID', async () => {
