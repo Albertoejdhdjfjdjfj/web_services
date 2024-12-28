@@ -3,10 +3,10 @@ name: Lab6 CI and Deploy
 on:
   push:
     branches:
-      - lab6
+      - main
   pull_request:
     branches:
-      - lab6
+      - main
  
 jobs:
   build:
