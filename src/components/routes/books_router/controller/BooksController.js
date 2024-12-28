@@ -21,10 +21,10 @@ class BooksController {
       })
         .skip(skip)
         .limit(limitNumber);
-      res.status(200).json(books);
+      res.status(200).json({data:books,message:'r2jrbj3j4rb3'});
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: 'Ошибка при получении книг!' });
+      res.status(400).json({ message: 'Ошибка при получении книг' });
     }
   }
 
