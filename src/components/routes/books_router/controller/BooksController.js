@@ -24,7 +24,7 @@ class BooksController {
       res.status(200).json(books);
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: 'Ошибка при получении книг' });
+      res.status(400).json({ message: 'Ошибка при получении книг!' });
     }
   }
 
