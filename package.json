@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.js",
-    "test": "npx run jest"
+    "test": " npx jest --detectOpenHandles ./src/index.test.js"
   },
   "author": "",
   "license": "ISC",
